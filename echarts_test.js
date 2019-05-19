@@ -190,3 +190,111 @@ require(
     }
   );
   
+  require(
+    [
+      'echarts',
+      'echarts/chart/line',
+      'echarts/chart/bar'
+    ],
+    function (ec) {
+  
+      var lineChart = ec.init(document.getElementById('line-chart'));
+  
+      var lineOption = {
+  
+        title : {
+          text: 'Line-Chart',
+          x:'center'
+        },
+  
+        tooltip : {
+          trigger: 'axis',
+        },
+  
+        legend: {
+          textStyle: {
+            fontWeight: 'bolder',
+            fontSize: 20,
+          },
+          orient : 'vertical',
+          x : '75%',
+          y : '20%',
+          data:['最低気温','最高気温']
+        },
+  
+        toolbox: {
+          show : true,
+          x : 300,
+          feature : {
+            dataView : {
+              show: true, 
+              title: 'データの表示', 
+              readOnly: false,
+              lang: ['データの表示','閉じる','更新']
+            },
+            magicType : {
+              show: true, 
+              title: {
+                line : '折れ線グラフ',
+                bar : '棒グラフ'
+              },
+              type: ['bar', 'line'],
+            },
+            restore : {show: true, title: '更新'},
+            saveAsImage : {show: true, title: '画像保存'}
+          }
+        },
+  
+        calculable : true,
+  
+        xAxis : [
+          {
+            type : 'category',
+            data : ['月','火','水','木','金','土','日']
+          }
+        ],
+        yAxis : [
+          {
+            type : 'value',
+            axisLabel : {
+              formatter: '{value} ℃'
+            }
+          }
+        ],
+        series : [
+          {
+            name:'最高気温',
+            type:'line',
+            data:[11, 11, 15, 13, 12, 13, 10],
+            markPoint : {
+              data : [
+                {type : 'max', name: '最大值'},
+                {type : 'min', name: '最小值'}
+              ]
+            },
+            markLine : {
+              data : [
+                  {type : 'average', name: '平均值'}
+              ]
+            }
+          },
+          {
+            name:'最低気温',
+            type:'line',
+            data:[1, -2, 2, 5, 3, 2, 0],
+            markPoint : {
+              data : [
+                {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+              ]
+            },
+            markLine : {
+              data : [
+                {type : 'average', name : '平均值'}
+              ]
+            }
+          }
+        ]
+      };
+      lineChart.setOption(lineOption); 
+    }
+  );
